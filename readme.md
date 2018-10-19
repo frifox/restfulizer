@@ -10,7 +10,7 @@ __0:__ Load jQuery
 __1:__ Load `restfulizer.js`
 
 ```html
-  <script type="text/javascript" src="restfulizer.js"></script>
+ <script type="text/javascript" src="restfulizer.js"></script>
 ```
 
 __2:__ Add appropriate `data-method` attribute to your `<a>` links and run `$.restfulizer()`
@@ -49,4 +49,10 @@ $("#link").restfulize({
     method: "put",              // Request method, GET/POST/PUT/DELETE (default `POST`)
     action: "/endpoint?var=val" // If using href attribute isn't an option
 });
+```
+
+# Laravel CSRF
+Make sure your `<head>` contains csrf-token meta tag, it will get fwd as `_token` var in POST
+```html
+<meta name="csrf-token" content="{{ csrf_token() }}">
 ```
