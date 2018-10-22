@@ -1,7 +1,7 @@
 Restfulizer
 ==========
 
-A jQuery plugin to transform `<a>` links into restful POST/PUT/UPDATE requests
+A jQuery plugin to transform `<a>` tags into restful POST/PUT/UPDATE requests
 
 ## How to use
 
@@ -29,10 +29,10 @@ $('a').restfulize();
 
 ## Available options
 ```javascript
-$("a").restfulize({
+$('a').restfulize({
     post_query: true,            // Send query vars as part of POST body (default `true`)
-    method: "post",              // Request method, GET/POST/PUT/DELETE (default `POST`)
-    action: "/endpoint?var=val", // If using href attribute isn't an option
+    method: 'post',              // Request method, GET/POST/PUT/DELETE (default `POST`)
+    action: '/endpoint?var=val', // If using href attribute isn't an option
     confirm: 'Are you sure?'     // Prompt text to confirm DELETE. Set to "false" to disable
 });
 ```

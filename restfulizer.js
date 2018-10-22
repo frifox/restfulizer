@@ -11,7 +11,7 @@
         restfulize: function(options) {
             options = $.extend({
                 post_query: true,
-                method: "POST",
+                method: 'POST',
                 action: null,
                 confirm: 'Are you sure?'
             }, options);
@@ -65,7 +65,7 @@
                 }
 
                 // transform query into <intput>s?
-                var query_index = options.action.indexOf("?");
+                var query_index = options.action.indexOf('?');
                 if(options.post_query &&  query_index > 0) {
                     var query = options.action.substr(query_index + 1);
                     $.each(query.split('&'), function(i, pair) {
