@@ -13,7 +13,7 @@ __1:__ Load `restfulizer.js`
  <script type="text/javascript" src="restfulizer.js"></script>
 ```
 
-__2:__ Add appropriate `data-method` attribute to your `<a>` links and run `$.restfulizer()`
+__2:__ Add appropriate `data-method` attribute to your `<a>` links and run `restfulize()`
 
 ```html
 <a href="/user/3" data-method="post">POST</a>
