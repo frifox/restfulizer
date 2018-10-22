@@ -13,7 +13,7 @@ __1:__ Load `restfulizer.js`
  <script type="text/javascript" src="restfulizer.js"></script>
 ```
 
-__2:__ Add appropriate `data-method` attribute to your `<a>` links and run `restfulize()`
+__2:__ Add appropriate `data-method` attribute to your `<a>` links
 
 ```html
 <a href="/user/3" data-method="post">POST</a>
@@ -22,6 +22,7 @@ __2:__ Add appropriate `data-method` attribute to your `<a>` links and run `rest
 <a href="/user/3" data-method="delete" data-confirm="false">sudo DELETE</a>
 ```
 
+__3__  Run `restfulize()`
 ```javascript
 $('a').restfulize();
 ```
