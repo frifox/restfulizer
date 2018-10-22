@@ -44,4 +44,4 @@ Make sure your `<head>` contains csrf-token meta tag, it will get fwd as `_token
 ```
 
 # Examples
-See `example.html` for examples
+See [`example.html`](https://raw.githubusercontent.com/frifox/restfulizer/master/example.html) for examples
