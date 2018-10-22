@@ -10,7 +10,7 @@
     $.fn.extend({
         restfulize: function(options) {
             options = $.extend({
-                post_query: false,
+                post_query: true,
                 method: "POST",
                 action: null,
                 confirm: 'Are you sure?'
@@ -65,10 +65,11 @@
                 }
 
                 // transform query into <intput>s?
-                if(options.post_query) {
-                    var params = options.action.substr(options.action.indexOf("?") + 1).split('&');
-                    for (var i = 0; i < params.length; i++) {
-                        var pair = params[i].split('=');
+                var query_index = options.action.indexOf("?");
+                if(options.post_query &&  query_index > 0) {
+                    var query = options.action.substr(query_index + 1);
+                    $.each(query.split('&'), function(i, pair) {
+                        pair = pair.split('=');
                         $form.append(
                             $('<input/>', {
                                 type: 'hidden',
@@ -76,9 +77,9 @@
                                 value: decodeURIComponent(pair[1])
                             })
                         );
-                    }
+                    });
 
-                    $form.attr('action', options.action.substr(0, options.action.indexOf("?")));
+                    $form.attr('action', options.action.substr(0, query_index));
                 }
 
                 // write the form, remember method/confirm values
@@ -89,7 +90,7 @@
                     .data('confirm', options.confirm);
 
                 // submit the form on click
-                $a.bind('click', function(event) {
+                $a.on('click', function(event) {
                     if ($a.data('method') === 'DELETE' && $a.data('confirm') !== false) {
                         if(!confirm($a.data('confirm'))) {
                             return false;

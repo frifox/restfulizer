@@ -26,23 +26,10 @@ __2:__ Add appropriate `data-method` attribute to your `<a>` links and run `rest
 $('a').restfulize();
 ```
 
-## Pass query vars as POST
-
-```html
-<a href="/campaign/3?status=paused" class="campaign-actions">Pause</a>
-<a href="/campaign/3?status=active" class="campaign-actions">Resume</a>
-```
-
-```javascript
-$(".campaign-actions").restfulize({
-    post_query: true
-});
-```
-
 ## Available options
 ```javascript
-$("#link").restfulize({
-    post_query: false,           // Send query vars as part of POST body (default `false`)
+$("a").restfulize({
+    post_query: true,            // Send query vars as part of POST body (default `true`)
     method: "post",              // Request method, GET/POST/PUT/DELETE (default `POST`)
     action: "/endpoint?var=val", // If using href attribute isn't an option
     confirm: 'Are you sure?'     // Prompt text to confirm DELETE. Set to "false" to disable

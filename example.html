@@ -12,23 +12,13 @@
     <li><a href="http://mockbin.com/request" data-method="post">POST</a></li>
     <li><a href="http://mockbin.com/request" data-method="put">PUT</a></li>
     <li><a href="http://mockbin.com/request" data-method="delete">DELETE</a></li>
-</ul>
-<script>
-    $(document).ready(function() {
-        $('#simple a').restfulize();
-    });
-</script>
 
-<h1>Pass query vars</h1>
-<ul id="vars">
     <li><a href="http://mockbin.com/request?status=disabled" data-method="put">PUT w/ vars</a></li>
     <li><a href="http://mockbin.com/request?id=3" data-method="delete">DELETE w/ vars</a></li>
 </ul>
 <script>
     $(document).ready(function() {
-        $('#vars a').restfulize({
-            post_query: true
-        });
+        $('#simple a').restfulize();
     });
 </script>
 
@@ -47,14 +37,18 @@
 <ul id="div">
     <li><div href="http://mockbin.com/request?submit=div" data-method="put">div as &#x3C;a&#x3E;</div></li>
     <li><span>blank span</span></li>
+    <li><label>GET label</label></li>
 </ul>
 <script>
     $(document).ready(function() {
         $('#div div').restfulize();
         $('#div span').restfulize({
             action: 'http://mockbin.com/request?submit=span',
-            method: 'put',
-            post_query: true
+            method: 'put'
+        });
+        $('#div label').restfulize({
+            action: 'http://mockbin.com/request?submit=get',
+            method: 'get'
         });
     });
 </script>
