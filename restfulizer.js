@@ -34,16 +34,20 @@
 
                 // prepare the form
                 var $form = $('<form/>', {
-                        style: 'display:none',
-                        action: options.action
-                    })
-                    .append(
+                    style: 'display:none',
+                    action: options.action
+                });
+
+                var token = $('meta[name=csrf-token]').attr('content');
+                if(token !== undefined) {
+                    $form.append(
                         $('<input/>', {
                             type: 'hidden',
                             name: '_token',
-                            value: $('meta[name=csrf-token]').attr('content')
+                            value: token
                         })
                     );
+                }
 
                 // how are we submitting it?
                 switch(options.method) {

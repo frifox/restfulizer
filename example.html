@@ -7,51 +7,53 @@
 </head>
 <body>
 
-<h1>Basic Usage</h1>
-<ul id="simple">
-    <li><a href="http://mockbin.com/request" data-method="post">POST</a></li>
-    <li><a href="http://mockbin.com/request" data-method="put">PUT</a></li>
-    <li><a href="http://mockbin.com/request" data-method="delete">DELETE</a></li>
+    <h1>Basic Usage</h1>
+    <ul id="simple">
+        <li><a href="http://mockbin.com/request" data-method="post">POST</a></li>
+        <li><a href="http://mockbin.com/request" data-method="put">PUT</a></li>
+        <li><a href="http://mockbin.com/request" data-method="delete">DELETE</a></li>
 
-    <li><a href="http://mockbin.com/request?status=disabled" data-method="put">PUT w/ vars</a></li>
-    <li><a href="http://mockbin.com/request?id=3" data-method="delete">DELETE w/ vars</a></li>
-</ul>
-<script>
-    $(document).ready(function() {
-        $('#simple a').restfulize();
-    });
-</script>
-
-<h1>Custom confirm</h1>
-<ul id="confirm">
-    <li><a href="http://mockbin.com/request?user_id=3" data-method="delete" data-confirm="Custom massage? You sure?">DELETE w/ message</a></li>
-    <li><a href="http://mockbin.com/request?user_id=3" data-method="delete" data-confirm="false">DELETE w/out message</a></li>
-</ul>
-<script>
-    $(document).ready(function() {
-        $('#confirm a').restfulize();
-    });
-</script>
-
-<h1>Submit non-&#x3C;a&#x3E; tag</h1>
-<ul id="div">
-    <li><div href="http://mockbin.com/request?submit=div" data-method="put">div as &#x3C;a&#x3E;</div></li>
-    <li><span>blank span</span></li>
-    <li><label>GET label</label></li>
-</ul>
-<script>
-    $(document).ready(function() {
-        $('#div div').restfulize();
-        $('#div span').restfulize({
-            action: 'http://mockbin.com/request?submit=span',
-            method: 'put'
+        <li><a href="http://mockbin.com/request?status=disabled" data-method="put">PUT w/ vars</a></li>
+        <li><a href="http://mockbin.com/request?id=3" data-method="delete">DELETE w/ vars</a></li>
+    </ul>
+    <script>
+        $(document).ready(function() {
+            $('#simple a').restfulize();
         });
-        $('#div label').restfulize({
-            action: 'http://mockbin.com/request?submit=get',
-            method: 'get'
+    </script>
+
+    <h1>Custom confirm</h1>
+    <ul id="confirm">
+        <li><a href="http://mockbin.com/request?user_id=3" data-method="delete" data-confirm="Custom massage? You sure?">DELETE w/ message</a></li>
+        <li><a href="http://mockbin.com/request?user_id=3" data-method="delete" data-confirm="false">DELETE w/out message</a></li>
+    </ul>
+    <script>
+        $(document).ready(function() {
+            $('#confirm a').restfulize({
+                confirm: 'New confirm'
+            });
         });
-    });
-</script>
+    </script>
+
+    <h1>Submit non-&#x3C;a&#x3E; tag</h1>
+    <ul id="div">
+        <li><div href="http://mockbin.com/request?submit=div" data-method="put">div as &#x3C;a&#x3E;</div></li>
+        <li><span>blank span</span></li>
+        <li><label>GET label</label></li>
+    </ul>
+    <script>
+        $(document).ready(function() {
+            $('#div div').restfulize();
+            $('#div span').restfulize({
+                action: 'http://mockbin.com/request?submit=span',
+                method: 'put'
+            });
+            $('#div label').restfulize({
+                action: 'http://mockbin.com/request?submit=get',
+                method: 'get'
+            });
+        });
+    </script>
 
 </body>
 </html>
