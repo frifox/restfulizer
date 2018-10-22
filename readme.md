@@ -19,13 +19,10 @@ __2:__ Add appropriate `data-method` attribute to your `<a>` links and run `$.re
 <a href="/user/3" data-method="post">POST</a>
 <a href="/user/3" data-method="put">PUT</a>
 <a href="/user/3" data-method="delete">DELETE</a>
+<a href="/user/3" data-method="delete" data-confirm="false">sudo DELETE</a>
 ```
 
 ```javascript
-$.restfulizer();
-
-// which is effectively a shortcut for:
-
 $('a').restfulize();
 ```
 
@@ -45,9 +42,10 @@ $(".campaign-actions").restfulize({
 ## Available options
 ```javascript
 $("#link").restfulize({
-    query_to_post: true,        // Send query vars as part of POST body (default `false`)
-    method: "put",              // Request method, GET/POST/PUT/DELETE (default `POST`)
-    action: "/endpoint?var=val" // If using href attribute isn't an option
+    post_query: false,           // Send query vars as part of POST body (default `false`)
+    method: "put",               // Request method, GET/POST/PUT/DELETE (default `POST`)
+    action: "/endpoint?var=val", // If using href attribute isn't an option
+    confirm: 'Are you sure?'     // Prompt text to confirm DELETE. Set to "false" to disable
 });
 ```
 

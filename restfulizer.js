@@ -10,32 +10,39 @@
     $.fn.extend({
         restfulize: function(options) {
             options = $.extend({
-                query_to_post: false,
+                post_query: false,
                 method: "POST",
-                action: null
+                action: null,
+                confirm: 'Are you sure?'
             }, options);
             options.method = options.method.toUpperCase();
 
             return this.each(function() {
                 var $a = $(this);
+                $a.options = options;
 
-                // get options
-                if($a.attr('data-method') !== undefined) {
-                    options.method = $a.attr('data-method').toUpperCase();
+                // get options from html?
+                if($a.data('method') !== undefined) {
+                    options.method = $a.data('method').toUpperCase();
+                }
+                if($a.data('confirm') !== undefined) {
+                    options.confirm = $a.data('confirm');
                 }
                 if($a.attr('href') !== undefined) {
                     options.action = $a.attr('href');
                 }
 
                 // prepare the form
-                var $form = $('<form/>')
-                    .attr('style', 'display:none')
-                    .attr('action', options.action)
+                var $form = $('<form/>', {
+                        style: 'display:none',
+                        action: options.action
+                    })
                     .append(
-                        $('<input/>')
-                            .attr('type', 'hidden')
-                            .attr('name', '_token')
-                            .attr('value', $('meta[name=csrf-token]').attr('content'))
+                        $('<input/>', {
+                            type: 'hidden',
+                            name: '_token',
+                            value: $('meta[name=csrf-token]').attr('content')
+                        })
                     );
 
                 // how are we submitting it?
@@ -48,69 +55,51 @@
                     case 'DELETE':
                         $form.attr('method', 'POST');
                         $form.append(
-                            $('<input/>')
-                                .attr('type', 'hidden')
-                                .attr('name', '_method')
-                                .attr('value', options.method)
+                            $('<input/>', {
+                                type: 'hidden',
+                                name: '_method',
+                                value: options.method
+                            })
                         );
                     break;
                 }
 
                 // transform query into <intput>s?
-                if(options.query_to_post) {
-                    var params = options.action.substr(options.action.indexOf("?")+1).split('&');
-                    $form.attr('action', options.action.substr(0, options.action.indexOf("?")));
-
+                if(options.post_query) {
+                    var params = options.action.substr(options.action.indexOf("?") + 1).split('&');
                     for (var i = 0; i < params.length; i++) {
                         var pair = params[i].split('=');
                         $form.append(
-                            $('<input/>')
-                                .attr('type', 'hidden')
-                                .attr('name', decodeURIComponent(pair[0]))
-                                .attr('value', decodeURIComponent(pair[1]))
+                            $('<input/>', {
+                                type: 'hidden',
+                                name: decodeURIComponent(pair[0]),
+                                value: decodeURIComponent(pair[1])
+                            })
                         );
                     }
+
+                    $form.attr('action', options.action.substr(0, options.action.indexOf("?")));
                 }
 
-                // we're good to go
+                // write the form, remember method/confirm values
                 $a.append($form)
                     .removeAttr('href')
-                    .attr('style', 'cursor: pointer');
+                    .attr('style', 'cursor: pointer')
+                    .data('method', options.method)
+                    .data('confirm', options.confirm);
 
-                // submit the form on <a> click
-                $a.click(function() {
-                    if (options.method === 'DELETE') {
-                        if(!confirm('Are you sure?')) {
+                // submit the form on click
+                $a.bind('click', function(event) {
+                    if ($a.data('method') === 'DELETE' && $a.data('confirm') !== false) {
+                        if(!confirm($a.data('confirm'))) {
                             return false;
                         }
                     }
 
-                    $form[0].submit();
+                    // in case form has `submit` attribute, which overrides submit()
+                    document.createElement('form').submit.call($form[0]);
                 });
             });
         }
     });
-
-    $.restfulizer = function() {
-        var supported_methods = [
-            'GET',
-            'POST',
-            'PUT',
-            'DELETE'
-        ];
-
-        $('a').each(function() {
-            var $a = $(this);
-
-            var method = $a.data('method');
-            if(
-                method !== undefined
-                && supported_methods.includes(method.toUpperCase())
-                && $a.attr('href') !== undefined
-                && $a.attr('href') !== ''
-            ) {
-                $a.restfulize();
-            }
-        });
-    };
 })(jQuery);
