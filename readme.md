@@ -43,7 +43,7 @@ $(".campaign-actions").restfulize({
 ```javascript
 $("#link").restfulize({
     post_query: false,           // Send query vars as part of POST body (default `false`)
-    method: "post",               // Request method, GET/POST/PUT/DELETE (default `POST`)
+    method: "post",              // Request method, GET/POST/PUT/DELETE (default `POST`)
     action: "/endpoint?var=val", // If using href attribute isn't an option
     confirm: 'Are you sure?'     // Prompt text to confirm DELETE. Set to "false" to disable
 });
