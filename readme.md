@@ -54,3 +54,6 @@ Make sure your `<head>` contains csrf-token meta tag, it will get fwd as `_token
 ```html
 <meta name="csrf-token" content="{{ csrf_token() }}">
 ```
+
+# Examples
+See `exapmle.html` for exapmles
