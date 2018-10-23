@@ -13,7 +13,7 @@ __1:__ Load `restfulizer.js`
  <script type="text/javascript" src="restfulizer.js"></script>
 ```
 
-__2:__ Add appropriate `data-method` attribute to your `<a>` links
+__2:__ Add appropriate `data-method` attribute to your `<a>` tags
 
 ```html
 <a href="/user/3" data-method="post">POST</a>
@@ -31,7 +31,7 @@ $('a').restfulize();
 ```javascript
 $('a').restfulize({
     post_query: true,            // Send query vars as part of POST body (default `true`)
-    method: 'post',              // Request method, GET/POST/PUT/DELETE (default `POST`)
+    method: 'post',              // Request method, GET/POST/PUT/DELETE
     action: '/endpoint?var=val', // If using href attribute isn't an option
     confirm: 'Are you sure?'     // Prompt text to confirm DELETE. Set to "false" to disable
 });

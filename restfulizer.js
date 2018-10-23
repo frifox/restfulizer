@@ -9,33 +9,36 @@
 (function($){
     $.fn.extend({
         restfulize: function(options) {
-            options = $.extend({
-                post_query: true,
-                method: 'POST',
-                action: null,
-                confirm: 'Are you sure?'
-            }, options);
-            options.method = options.method.toUpperCase();
-
             return this.each(function() {
                 var $a = $(this);
-                $a.options = options;
+
+                $a.options = $.extend({
+                    post_query: true,
+                    method: null,
+                    action: null,
+                    confirm: 'Are you sure?'
+                }, options);
 
                 // get options from html?
                 if($a.data('method') !== undefined) {
-                    options.method = $a.data('method').toUpperCase();
+                    $a.options.method = $a.data('method').toUpperCase();
                 }
                 if($a.data('confirm') !== undefined) {
-                    options.confirm = $a.data('confirm');
+                    $a.options.confirm = $a.data('confirm');
                 }
                 if($a.attr('href') !== undefined) {
-                    options.action = $a.attr('href');
+                    $a.options.action = $a.attr('href');
+                }
+
+                // avoid restfulizing normal links
+                if($a.options.method === null) {
+                    return;
                 }
 
                 // prepare the form
                 var $form = $('<form/>', {
                     style: 'display:none',
-                    action: options.action
+                    action: $a.options.action
                 });
 
                 var token = $('meta[name=csrf-token]').attr('content');
@@ -50,7 +53,8 @@
                 }
 
                 // how are we submitting it?
-                switch(options.method) {
+                $a.options.method = $a.options.method.toUpperCase();
+                switch($a.options.method) {
                     case 'GET':
                         $form.attr('method', 'GET');
                     break;
@@ -62,16 +66,16 @@
                             $('<input/>', {
                                 type: 'hidden',
                                 name: '_method',
-                                value: options.method
+                                value: $a.options.method
                             })
                         );
                     break;
                 }
 
                 // transform query into <intput>s?
-                var query_index = options.action.indexOf('?');
-                if(options.post_query &&  query_index > 0) {
-                    var query = options.action.substr(query_index + 1);
+                var query_index = $a.options.action.indexOf('?');
+                if($a.options.post_query &&  query_index > 0) {
+                    var query = $a.options.action.substr(query_index + 1);
                     $.each(query.split('&'), function(i, pair) {
                         pair = pair.split('=');
                         $form.append(
@@ -83,15 +87,15 @@
                         );
                     });
 
-                    $form.attr('action', options.action.substr(0, query_index));
+                    $form.attr('action', $a.options.action.substr(0, query_index));
                 }
 
                 // write the form, remember method/confirm values
                 $a.append($form)
                     .removeAttr('href')
                     .attr('style', 'cursor: pointer')
-                    .data('method', options.method)
-                    .data('confirm', options.confirm);
+                    .data('method', $a.options.method)
+                    .data('confirm', $a.options.confirm);
 
                 // submit the form on click
                 $a.on('click', function(event) {
