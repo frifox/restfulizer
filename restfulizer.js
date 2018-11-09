@@ -72,7 +72,7 @@
                     break;
                 }
 
-                // transform query into <intput>s?
+                // transform query into <input>s?
                 var query_index = $a.options.action.indexOf('?');
                 if($a.options.post_query &&  query_index > 0) {
                     var query = $a.options.action.substr(query_index + 1);
